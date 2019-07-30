@@ -1,0 +1,302 @@
+# -*- coding: utf-8 -*-
+
+##
+# Module dependencies
+
+import json
+import requests
+
+from . import client
+
+
+##
+# Pixaven class
+
+class pixaven(object):
+    def __init__(self, key = None):
+        self.options = {
+            'key': key,
+            'request': {}
+        }
+
+        if key is None or key is not key or type(key) is not str:
+            self.options['errorMessage'] = 'Pixaven constructor requires a valid API Key'
+
+
+    ##
+    # Uploads an image for processing
+    #
+    # @param {String|Buffer} file
+    # @returns {Pixaven}
+
+    def upload(self, file = ''):
+        if 'withFetch' in self.options:
+            self.options['errorMessage'] = 'Pixaven only accepts one file input method per call: upload(String|Buffer) or fetch(String)'
+
+        if file is None or file is not file:
+            self.options['errorMessage'] = 'Pixaven upload(String|Buffer) method requires file path or a Buffer passed as an argument'
+        else:
+            self.options['withUpload'] = True
+            self.options['file'] = file
+
+        return self
+
+
+    ##
+    # Provides a URL of the image for processing
+    #
+    # @param {String} url
+    # @returns {Pixaven}
+
+    def fetch(self, url = ''):
+        if 'withUpload' in self.options:
+            self.options['errorMessage'] = 'Pixaven only accepts one file input method per call: upload(String|Buffer) or fetch(String)'
+
+        if file is None or file is not file or type(url) is not str:
+            self.options['errorMessage'] = 'Pixaven fetch(String) method requires a valid file URL passed as an argument'
+        else:
+            self.options['withFetch'] = True
+            self.options['url'] = file
+
+        return self
+
+
+    ##
+    # Sets a proxy for HTTP requests
+    #
+    # @param {Dict} proxy
+    # @returns {Pixaven}
+
+    def setProxy(self, proxy = {}):
+        if proxy is not None and type(proxy) is dict:
+            self.options['proxy'] = proxy
+
+        return self
+
+
+    ##
+    # Resizes an image
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def resize(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['resize'] = data
+
+        return self
+
+
+    ##
+    # Scales an image
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def scale(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['scale'] = data
+
+        return self
+
+
+    ##
+    # Applies a watermark
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def watermark(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['watermark'] = data
+
+        return self
+
+
+    ##
+    # Applies an elliptical mask
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def mask(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['mask'] = data
+
+        return self
+
+
+    ##
+    # Applies a filter
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def stylize(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['stylize'] = data
+
+        return self
+
+
+    ##
+    # Adjusts visual parameters
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def adjust(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['adjust'] = data
+
+        return self
+
+
+    ##
+    # Automatically enhances an image
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def auto(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['auto'] = data
+
+        return self
+
+
+    ##
+    # Applies a border to an image
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def border(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['border'] = data
+
+        return self
+
+
+    ##
+    # Pads the image
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def padding(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['padding'] = data
+
+        return self
+
+
+    ##
+    # Stores processed image externally
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def store(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['store'] = data
+
+        return self
+
+
+    ##
+    # Sets output format and encoding
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def output(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['output'] = data
+
+        return self
+
+
+    ##
+    # Sets a Webhook as a reponse delivery method
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def webhook(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['webhook'] = data
+
+        return self
+
+
+    ##
+    # Sends a standard request to the API
+    # and returns a JSON response
+    #
+    # @returns {String, Dict}
+
+    def toJSON(self):
+        if 'toFile' in self.options or 'toBuffer' in self.options:
+            self.options['errorMessage'] = 'Pixaven only accepts one response method per call: toJSON(), toFile(String) or toBuffer()'
+
+        if 'withUpload' not in self.options and 'withFetch' not in self.options:
+            self.options['errorMessage'] = 'No file input has been specified with either upload(String|Buffer) or fetch(String) method'
+
+        self.options['toJSON'] = True
+
+        return client.sendRequest(self.options)
+
+
+    ##
+    # Instructs the API to use a Binary Response
+    # and streams the response to disk
+    #
+    # @param {String} path
+    # @returns {String, Dict}
+
+    def toFile(self, path = ''):
+        if path is None or path is not path or type(path) is not str:
+            self.options['errorMessage'] = 'Pixaven toFile(String) method requires a valid output file path as a parameter'
+
+        if 'toJSON' in self.options or 'toBuffer' in self.options:
+            self.options['errorMessage'] = 'Pixaven only accepts one response method per call: toJSON(), toFile(String) or toBuffer()'
+
+        if 'webhook' in self.options['request']:
+            self.options['errorMessage'] = 'Binary responses with toFile(String) method are not supported when using Webhooks'
+
+        if 'store' in self.options['request']:
+            self.options['errorMessage'] = 'Binary responses with toFile(String) method are not supported when using External Storage'
+
+        if 'withUpload' not in self.options and 'withFetch' not in self.options:
+            self.options['errorMessage'] = 'No file input has been specified with either upload(String|Buffer) or fetch(String) method'
+
+        self.options['toFile'] = True
+        self.options['outputPath'] = path
+
+        return client.sendRequest(self.options)
+
+
+    ##
+    # Instructs the API to use a Binary Response
+    # and returns a buffer to the user
+    #
+    # @param {Array} data
+    # @returns {String, Dict, Buffer}
+
+    def toBuffer(self):
+        if 'toJSON' in self.options or 'toFile' in self.options:
+            self.options['errorMessage'] = 'Pixaven only accepts one response method per call: toJSON(), toFile(String) or toBuffer()'
+
+        if 'webhook' in self.options['request']:
+            self.options['errorMessage'] = 'Binary responses with toBuffer() method are not supported when using Webhooks'
+
+        if 'store' in self.options['request']:
+            self.options['errorMessage'] = 'Binary responses with toBuffer() method are not supported when using External Storage'
+
+        if 'withUpload' not in self.options and 'withFetch' not in self.options:
+            self.options['errorMessage'] = 'No file input has been specified with either upload(String|Buffer) or fetch(String) method'
+
+        self.options['toBuffer'] = True
+
+        return client.sendRequest(self.options)
