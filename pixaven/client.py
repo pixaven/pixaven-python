@@ -52,7 +52,7 @@ def sendRequest(options):
     # Use JSON request for fetch() mode
 
     if 'withFetch' in options:
-        endpoint = 'http://api.pixaven.com/1.0/fetch'
+        endpoint = 'https://api.pixaven.com/1.0/fetch'
         headers['Content-Type'] = 'application/json'
 
 
@@ -60,7 +60,7 @@ def sendRequest(options):
     # Use Multipart request for upload() mode
 
     if 'withUpload' in options:
-        endpoint = 'http://api.pixaven.com/1.0/upload'
+        endpoint = 'https://api.pixaven.com/1.0/upload'
 
         if type(options['file']) is not str:
             file = options['file'].getvalue()
