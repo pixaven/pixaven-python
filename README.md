@@ -24,7 +24,7 @@ See the [Pixaven API docs](https://docs.pixaven.com/).
 
 ### Installation
 ```bash
-$ npm install pixaven --save
+$ pip install pixaven
 ```
 
 ### Quick examples
