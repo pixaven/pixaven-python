@@ -24,7 +24,7 @@ See the [Pixaven API docs](https://docs.pixaven.com/).
 
 ### Installation
 ```bash
-$ npm install pixaven --save
+$ pip install pixaven
 ```
 
 ### Quick examples
@@ -83,9 +83,6 @@ err, meta = (
             'blur': {
                 'mode': 'gaussian',
                 'value': 10
-            },
-            'sepia': {
-                'value': 20
             }
         })
         .output({
