@@ -67,7 +67,7 @@ if err is not None:
 #### Image fetch
 If you already have your source visuals publicly available online, we recommend using Image Fetch by default. That way you only have to send a JSON payload containing image URL and processing steps. This method is also much faster than uploading a full binary representation of the image.
 
-```js
+```python
 from pixaven import pixaven
 
 // Specify your Pixaven API Key in the constructor
