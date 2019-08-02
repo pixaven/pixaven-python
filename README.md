@@ -38,12 +38,12 @@ Here is a quick example of uploading a local file for processing. It calls `.toJ
 ```python
 from pixaven import pixaven
 
-// Specify your Pixaven API Key in the constructor
+# Specify your Pixaven API Key in the constructor
 client = pixaven('your-api-key')
 
-// Upload an image from disk, resize it to 100 x 75,
-// automatically enhance, and adjust sharpness parameter.
-// You'll find the full JSON metadata within the `meta` variable
+# Upload an image from disk, resize it to 100 x 75,
+# automatically enhance, and adjust sharpness parameter.
+# You'll find the full JSON metadata within the `meta` variable
 err, meta = (
     client
         .upload('path/to/input.jpg')
@@ -70,12 +70,12 @@ If you already have your source visuals publicly available online, we recommend 
 ```python
 from pixaven import pixaven
 
-// Specify your Pixaven API Key in the constructor
+# Specify your Pixaven API Key in the constructor
 client = pixaven('your-api-key')
 
-// Provide a publicly available image URL with `.fetch()` method,
-// apply Gaussian blur using PNG as the output format.
-// We'll also use `.toFile()` method and stream the output image to disk
+# Provide a publicly available image URL with `.fetch()` method,
+# apply Gaussian blur using PNG as the output format.
+# We'll also use `.toFile()` method and stream the output image to disk
 err, meta = (
     client
         .fetch('https://www.website.com/image.jpg')
