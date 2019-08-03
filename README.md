@@ -70,7 +70,7 @@ If you already have your source visuals publicly available online, we recommend 
 ```python
 from pixaven import pixaven
 
-# Specify your Pixaven API Key in the constructor
+# Pass your Pixaven API Key to the constructor
 client = pixaven('your-api-key')
 
 # Provide a publicly available image URL with `.fetch()` method,
