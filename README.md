@@ -38,7 +38,7 @@ Here is a quick example of uploading a local file for processing. It calls `.toJ
 ```python
 from pixaven import pixaven
 
-# Specify your Pixaven API Key in the constructor
+# Pass your Pixaven API Key to the constructor
 client = pixaven('your-api-key')
 
 # Upload an image from disk, resize it to 100 x 75,
