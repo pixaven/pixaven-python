@@ -14,6 +14,7 @@ setup (
     description = 'Official Python integration for the Pixaven Image API',
     long_description = 'Pixaven is an enterprise-grade image processing SaaS running entirely on Apple® platform. Resize, scale, crop, mask, filter and enhance your images with blazing speed.',
     url = 'https://github.com/pixaven/pixaven-python',
+    download_url = 'https://github.com/pixaven/pixaven-python/archive/1.0.0.tar.gz',
     author = 'Pixaven UG',
     author_email = 'support@pixaven.com',
     license = 'MIT',
