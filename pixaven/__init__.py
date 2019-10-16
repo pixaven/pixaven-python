@@ -132,9 +132,9 @@ class pixaven(object):
     # @param {Dict} data
     # @returns {Pixaven}
 
-    def stylize(self, data = {}):
+    def filter(self, data = {}):
         if data is not None and type(data) is dict:
-            self.options['request']['stylize'] = data
+            self.options['request']['filter'] = data
 
         return self
 
