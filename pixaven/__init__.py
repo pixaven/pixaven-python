@@ -75,6 +75,19 @@ class pixaven(object):
 
 
     ##
+    # Flips an image
+    #
+    # @param {Dict} data
+    # @returns {Pixaven}
+
+    def flip(self, data = {}):
+        if data is not None and type(data) is dict:
+            self.options['request']['flip'] = data
+
+        return self
+
+
+    ##
     # Resizes an image
     #
     # @param {Dict} data
